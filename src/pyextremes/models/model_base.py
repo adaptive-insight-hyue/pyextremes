@@ -125,7 +125,8 @@ class AbstractModelBaseClass(abc.ABC):
         k = self.distribution.number_of_parameters
         n = len(self.extremes)
         aic = 2 * k - 2 * self.loglikelihood
-        correction = (2 * k**2 + 2 * k) / (n - k - 1)
+        # correction = (2 * k**2 + 2 * k) / (n - k - 1)
+        correction = 0   # use normal AIC, not AICc
         return aic + correction
 
     @abc.abstractmethod
