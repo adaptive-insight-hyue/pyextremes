@@ -111,7 +111,10 @@ def get_return_periods(
     if extremes_method == "BM":
         extremes_rate = return_period_size / block_size
     elif extremes_method == "POT":
-        n_periods = (ts.index.max() - ts.index.min()) / return_period_size
+        if len(ts) > 1:
+            n_periods = (ts.index.max() - ts.index.min()) / return_period_size
+        else:
+            n_periods = 1.0    # default 1 period if only one data point provided
         extremes_rate = len(extremes) / n_periods
     else:
         raise ValueError(
