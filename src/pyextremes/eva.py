@@ -1232,7 +1232,10 @@ class EVA:
         if self.extremes_method == "BM":
             extremes_rate = return_period_size / self.extremes_kwargs["block_size"]
         elif self.extremes_method == "POT":
-            n_periods = (self.data.index[-1] - self.data.index[0]) / return_period_size
+            if len(self.data) > 1:
+                n_periods = (self.data.index[-1] - self.data.index[0]) / return_period_size
+            else:
+                n_periods = 1.0    # default 1 period if only one data point provided
             extremes_rate = len(self.extremes) / n_periods
         else:
             raise AssertionError
